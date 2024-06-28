@@ -3,6 +3,13 @@ from random import randint
 from sklearn.utils import shuffle 
 from sklearn.preprocessing import MinMaxScaler
 
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Activation, Dense
+from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.metrics import categorical_crossentropy
+
 train_labels = []
 train_samples = []
 
@@ -36,3 +43,16 @@ scaled_train_sample = scaler.fit_transform(train_samples.reshape(-1,1))
 
 for i in scaled_train_sample:
     print(i)
+
+# enable GPU
+# physical_devices = tf.config.experimental. 'GPU' )
+# print("Num GPUs Available:", len (physical_devices) )
+# tf.config.experimental.set_memory_growth(physical_devices[0], True)
+
+model = Sequential([
+    Dense(units=16, input_shape=(1,), activation="relu"),
+    Dense(units=32, activation="relu"),
+    Dense(units=2, activation="softmax")
+])
+
+print(model.summary())
