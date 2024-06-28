@@ -6,7 +6,7 @@ from sklearn.preprocessing import MinMaxScaler
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Activation, Dense
+from tensorflow.keras.layers import Activation, Dense, Input
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.metrics import categorical_crossentropy
 
@@ -49,8 +49,15 @@ for i in scaled_train_sample:
 # print("Num GPUs Available:", len (physical_devices) )
 # tf.config.experimental.set_memory_growth(physical_devices[0], True)
 
+# model = Sequential([
+#     Dense(units=16, input_shape=(1,), activation="relu"),
+#     Dense(units=32, activation="relu"),
+#     Dense(units=2, activation="softmax")
+# ])
+# newer version: use Input as separate layer
 model = Sequential([
-    Dense(units=16, input_shape=(1,), activation="relu"),
+    Input(shape=(1,)),
+    Dense(units=16, activation="relu"),
     Dense(units=32, activation="relu"),
     Dense(units=2, activation="softmax")
 ])
