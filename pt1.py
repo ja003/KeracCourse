@@ -70,6 +70,8 @@ model.fit(x=scaled_train_samples, y=train_labels, batch_size=10, epochs=30, shuf
 
 # end of tutorial
 
+# MY TRY - BEGIN
+
 model.predict(scaled_train_samples)
 
 #try predict unlabeled data
@@ -88,3 +90,12 @@ unlabeled_samples = shuffle(unlabeled_samples)
 scaled_unlabeled_samples = scaler.fit_transform(unlabeled_samples.reshape(-1,1))
     
 model.predict(scaled_unlabeled_samples)
+
+# MY TRY - END
+
+# Build a validation set with TF's Keras API
+
+# now we set validation_split 
+# - splits portion of training set into validation set
+# - split happens before shuffle
+model.fit(x=scaled_train_samples, y=train_labels, validation_split=0.1, batch_size=10, epochs=30, shuffle=True, verbose=2)
