@@ -14,8 +14,8 @@ train_labels = []
 train_samples = []
 
 for i in range(50):
-    random_youger = randint(13, 64)
-    train_samples.append(random_youger)
+    random_younger = randint(13, 64)
+    train_samples.append(random_younger)
     train_labels.append(1)
     
     random_older = randint(65, 100)
@@ -23,8 +23,8 @@ for i in range(50):
     train_labels.append(0)
     
 for i in range(1000):
-    random_youger = randint(13, 64)
-    train_samples.append(random_youger)
+    random_younger = randint(13, 64)
+    train_samples.append(random_younger)
     train_labels.append(0)
     
     random_older = randint(65, 100)
@@ -79,8 +79,8 @@ model.predict(scaled_train_samples)
 unlabeled_samples = []
 
 for i in range(50):
-    random_youger = randint(13, 64)
-    unlabeled_samples.append(random_youger)
+    random_younger = randint(13, 64)
+    unlabeled_samples.append(random_younger)
     
     random_older = randint(65, 100)
     unlabeled_samples.append(random_older)
@@ -93,9 +93,56 @@ model.predict(scaled_unlabeled_samples)
 
 # MY TRY - END
 
-# Build a validation set with TF's Keras API
+# (00:30:07) Build a Validation Set With TensorFlow's Keras API
 
 # now we set validation_split 
 # - splits portion of training set into validation set
 # - split happens before shuffle
 model.fit(x=scaled_train_samples, y=train_labels, validation_split=0.1, batch_size=10, epochs=30, shuffle=True, verbose=2)
+
+# (00:39:28) Neural Network Predictions with TensorFlow's Keras API
+
+test_labels = []
+test_samples = []
+scaler = MinMaxScaler(feature_range=(0,1))
+
+# generate random data
+for i in range(10):
+    random_younger = randint(13, 64)
+    test_samples.append(random_younger)
+    test_labels.append(1)
+    
+    random_older = randint(65, 100)
+    test_samples.append(random_older)
+    test_labels.append(0)
+    
+for i in range(200):
+    random_younger = randint(13, 64)
+    test_samples.append(random_younger)
+    test_labels.append(0)
+    
+    random_older = randint(65, 100)
+    test_samples.append(random_older)
+    test_labels.append(1)
+    
+test_labels = np.array(test_labels)
+test_samples = np.array(test_samples)
+test_labels, test_samples = shuffle(test_labels, test_samples)
+
+scaled_test_samples = scaler.fit_transform(test_samples.reshape(-1,1))
+
+# predict
+
+predictions = model.predict(x=scaled_test_samples, batch_size=10, verbose=0)
+for i in predictions:
+    print(i)
+    
+rounded_predictions = np.argmax(predictions, axis=-1)  
+for i in rounded_predictions:
+    print(i)
+    
+# print format: "age: will_have_side_effect"
+for i in range(np.size(rounded_predictions)):
+    print(str(test_samples[i]) + ": " + str(rounded_predictions[i]))
+    
+    
