@@ -189,3 +189,53 @@ def plot_confusion_matrix(cm, classes,
     
 cm_plot_labels = ['no_side_effects', 'had_side_effects']
 plot_confusion_matrix(cm=cm, classes=cm_plot_labels, title='Confusion Matrix')
+
+# (00:52:29) Save and Load a Model with TensorFlow's Keras API
+
+#1. ??
+model.summary()
+
+import os.path
+filename = 'models/medical_trial_model.h5' # legacy format
+filename = 'models/medical_trial_model.keras' # newer format
+if os.path.isfile(filename) is False:
+    model.save(filename)
+    
+from tensorflow.keras.models import load_model
+new_model = load_model(filename)
+new_model.summary() # check that it is tha same model
+new_model.get_weights()
+
+# 2. model.to_json()
+
+# save as JSON
+json_string = model.to_json()
+# save as YAML
+# yaml_string = model.to_yaml()
+json_string
+# model reconstruction from JSON:
+from tensorflow.keras.models import model_from_json
+model_architecture = model_from_json(json_string)
+model_architecture.summary()
+# model reconstruction from YAML
+# from tensorfLow. keras. modeLs import modeL_from_yamL
+# model = modeL_from_yamL(yamL_string)
+
+# 3. model.save_weights
+
+# Checks first to see if fiLe exists aLready.
+# If not, the weights are saved to disk.
+import os.path
+filename2 = 'models/my_model_weights.weights.h5'
+if os.path.isfile(filename2) is False:
+    model.save_weights(filename2)
+    
+model2 = Sequential([
+    Input(shape=(1,)),
+    Dense(units=16, activation='relu'),
+    Dense(units=32, activation='relu'),
+    Dense(units=2, activation='softmax')
+])
+
+model2.load_weights(filename2)
+model2.get_weights()
