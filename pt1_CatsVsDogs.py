@@ -166,6 +166,24 @@ test_batches.class_indices
 cm_plot_labels = ['cat','dog']
 plot_confusion_matrix(cm=cm, classes=cm_plot_labels, title='Confusion Matrix')
 
+# 15. Build a Fine-Tuned Neural Network with TensorFlow's Keras API
+
+vgg16_model = tf.keras.applications.vgg16.VGG16()
+
+vgg16_model.summary()
+
+model = Sequential()
+for layer in vgg16_model.layers[:-1]:
+    model.add(layer)
+
+for layer in model.layers:
+    layer.trainable = False
+
+model.add(Dense(units=2, activation='softmax'))
+
+model.summary()
+
+
 
 
 
