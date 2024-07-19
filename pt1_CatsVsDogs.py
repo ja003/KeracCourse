@@ -183,7 +183,19 @@ model.add(Dense(units=2, activation='softmax'))
 
 model.summary()
 
+# 16. Train A Fine-Tuned Neural Network With TensorFlow's Keras API
+# https://deeplizard.com/learn/video/INaX55V1zpY
 
+model.compile(optimizer=Adam(learning_rate=0.0001), loss='categorical_crossentropy', metrics=['accuracy'])
+
+# this takes rly long time..
+model.fit(x=train_batches,
+          #steps_per_epoch=len(train_batches),
+          validation_data=valid_batches,
+          #validation_steps=len(valid_batches),
+          epochs=5,
+          verbose=2
+)
 
 
 
