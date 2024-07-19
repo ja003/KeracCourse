@@ -197,5 +197,15 @@ model.fit(x=train_batches,
           verbose=2
 )
 
+# 17. Predict With A Fine-Tuned Neural Network With TensorFlow's Keras API
+# https://deeplizard.com/learn/video/HDom7mAxCdc
+
+predictions = model.predict(x=test_batches, steps=len(test_batches), verbose=0)
+
+cm = confusion_matrix(y_true=test_batches.classes, y_pred=np.argmax(predictions, axis=-1))
+cm_plot_labels = ['cat','dog']
+plot_confusion_matrix(cm=cm, classes=cm_plot_labels, title='Confusion Matrix')
+
+
 
 
