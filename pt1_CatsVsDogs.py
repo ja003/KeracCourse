@@ -85,3 +85,33 @@ def plotImages(images_arr):
 plotImages(imgs)
 print (labels)
 
+# 12. (01:19:22) Build and Train a CNN with TensorFlow's Keras API
+# https://deeplizard.com/learn/video/daovGOlMbT4
+
+model = Sequential([
+    Conv2D(filters=32, kernel_size=(3, 3), activation='relu', padding = 'same', input_shape=(224,224,3)),
+    MaxPool2D(pool_size=(2, 2), strides=2),
+    Conv2D(filters=64, kernel_size=(3, 3), activation='relu', padding = 'same'),
+    MaxPool2D(pool_size=(2, 2), strides=2),
+    Flatten(),
+    Dense(units=2, activation='softmax')
+])
+
+model.summary()
+
+model.compile(optimizer=Adam(learning_rate=0.0001), loss='categorical_crossentropy', metrics=['accuracy'])
+
+model.fit(x=train_batches,
+    validation_data=valid_batches,
+    epochs=10,
+    verbose=2
+)
+
+# model.fit(x=train_batches,
+#     steps_per_epoch=len(train_batches), # not required in this TF version?
+#     validation_data=valid_batches,
+#     validation_steps=len(valid_batches),
+#     epochs=10,
+#     verbose=2
+# )
+
