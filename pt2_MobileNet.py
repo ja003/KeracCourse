@@ -53,3 +53,5 @@ preprocessed_image = prepare_image('3.PNG')
 predictions = mobile.predict(preprocessed_image)
 results = imagenet_utils.decode_predictions(predictions)
 results
+
+# Process Images for Fine-Tuned MobileNet with TensorFlow's Keras API
